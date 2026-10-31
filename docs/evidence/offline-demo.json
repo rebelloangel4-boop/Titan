@@ -1,0 +1,104 @@
+{
+  "recorded_at_utc": "2026-10-31T08:04:13Z",
+  "live_external_AI_calls": 0,
+  "reopened_mission": {
+    "id": "85eaf58c64ce45a9b58a52c95f64664f",
+    "objective": "Compare production durations",
+    "kind": "workflow",
+    "payload": {
+      "steps": [
+        {
+          "id": "baseline",
+          "kind": "analysis",
+          "values": [
+            24,
+            26,
+            25,
+            25
+          ]
+        },
+        {
+          "id": "candidate",
+          "kind": "analysis",
+          "values": [
+            22,
+            23,
+            24,
+            23
+          ],
+          "depends_on": [
+            "baseline"
+          ]
+        }
+      ]
+    },
+    "status": "completed",
+    "created": 1793433853.2681496,
+    "due": 1793433853.2681499,
+    "attempts": 1,
+    "max_attempts": 3,
+    "expires": 1793433943.2839117,
+    "checkpoint": {
+      "steps": {
+        "baseline": {
+          "count": 4,
+          "sum": 100.0,
+          "mean": 25,
+          "min": 24,
+          "max": 26,
+          "median": 25.0,
+          "verification": "deterministic_python_statistics"
+        },
+        "candidate": {
+          "count": 4,
+          "sum": 92.0,
+          "mean": 23,
+          "min": 22,
+          "max": 24,
+          "median": 23.0,
+          "verification": "deterministic_python_statistics"
+        }
+      }
+    },
+    "result": {
+      "steps": {
+        "baseline": {
+          "count": 4,
+          "sum": 100.0,
+          "mean": 25,
+          "min": 24,
+          "max": 26,
+          "median": 25.0,
+          "verification": "deterministic_python_statistics"
+        },
+        "candidate": {
+          "count": 4,
+          "sum": 92.0,
+          "mean": 23,
+          "min": 22,
+          "max": 24,
+          "median": 23.0,
+          "verification": "deterministic_python_statistics"
+        }
+      },
+      "verification": "Per-step tool or deterministic execution; inspect outputs"
+    },
+    "error": null
+  },
+  "fixed_benchmark": {
+    "id": "3db2d66092ab4fcbb92ee8066dc3d700",
+    "status": "benchmark_passed",
+    "baseline": {
+      "0": 1,
+      "1": 1,
+      "2": 1
+    },
+    "scores": {
+      "0": 1,
+      "1": 1,
+      "2": 1
+    },
+    "promoted": false,
+    "scope": "Fixed deterministic analysis suite only"
+  }
+}

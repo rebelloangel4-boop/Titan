@@ -1,0 +1,51 @@
+services:
+  api:
+    build: .
+    image: titan-ai:local
+    command: [python, -m, titan.server, --host, 0.0.0.0, --no-worker]
+    ports: ["127.0.0.1:8787:8787"]
+    env_file: [.env]
+    environment:
+      TITAN_TOKEN_FILE: /run/secrets/titan_token
+      TITAN_DB: /data/titan.db
+      TITAN_ARTIFACT_DIR: /data/artifacts
+    secrets: [titan_token]
+    volumes: [titan_data:/data]
+    read_only: true
+    tmpfs: [/tmp:size=128m,noexec,nosuid]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 64
+    mem_limit: 512m
+    cpus: 1.0
+    restart: unless-stopped
+  worker:
+    image: titan-ai:local
+    command: [python, -m, titan.cli, --worker, --db, /data/titan.db]
+    env_file: [.env]
+    environment:
+      TITAN_DB: /data/titan.db
+      TITAN_ARTIFACT_DIR: /data/artifacts
+    depends_on:
+      api:
+        condition: service_healthy
+    volumes: [titan_data:/data]
+    read_only: true
+    tmpfs: [/tmp:size=128m,noexec,nosuid]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 64
+    mem_limit: 512m
+    cpus: 1.0
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, python, -m, titan.health, /data/titan.db]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+secrets:
+  titan_token:
+    file: .secrets/titan_token
+volumes:
+  titan_data:

@@ -1,0 +1,11 @@
+{
+  "missions": 100,
+  "input_numbers_per_mission": 100,
+  "enqueue_seconds": 0.5201034789999994,
+  "execution_seconds": 0.9558288259999586,
+  "missions_per_second": 104.62124313459901,
+  "median_worker_ms": 8.98942900002453,
+  "p95_worker_ms": 13.12666100000115,
+  "external_model_calls": 0,
+  "scope": "Single process local SQLite deterministic analysis; no cloud or model SLA"
+}

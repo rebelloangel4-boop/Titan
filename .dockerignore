@@ -1,0 +1,5 @@
+*
+!titan/
+!titan/**
+titan/**/__pycache__/
+titan/**/*.pyc

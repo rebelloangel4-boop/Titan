@@ -1,0 +1,50 @@
+{
+  "initial_capital": 100000,
+  "final_equity": 99600.59960009999,
+  "return_pct": -0.3994003999000073,
+  "max_drawdown_pct": 1.9849056603773563,
+  "trades": 4,
+  "curve": [
+    {
+      "bar": 3,
+      "position": 1,
+      "equity": 100879.411765
+    },
+    {
+      "bar": 4,
+      "position": 1,
+      "equity": 99900.0
+    },
+    {
+      "bar": 5,
+      "position": 0,
+      "equity": 99800.1
+    },
+    {
+      "bar": 6,
+      "position": 1,
+      "equity": 100658.95663
+    },
+    {
+      "bar": 7,
+      "position": 1,
+      "equity": 101617.61336
+    },
+    {
+      "bar": 8,
+      "position": 1,
+      "equity": 99700.2999
+    },
+    {
+      "bar": 9,
+      "position": 0,
+      "equity": 99600.5996
+    }
+  ],
+  "verification": "deterministic_historical_paper_simulation",
+  "limitations": [
+    "User-supplied closing prices; not verified market data",
+    "No live orders, taxes, liquidity, corporate actions or intrabar fills",
+    "Long-only unit exposure; no leverage; no prediction of future returns"
+  ]
+}

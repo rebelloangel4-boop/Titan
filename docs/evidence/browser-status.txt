@@ -1,0 +1,9 @@
+Browser E2E attempted: tests/e2e.cjs with Playwright 1.62.1.
+Outcome: BLOCKED before launch; Chromium binary absent.
+Official install attempt: node <runtime>/playwright/cli.js install chromium.
+Outcome: download archive invalid/truncated; browser install unsuccessful.
+No browser assertions or screenshot capture completed. Not a passing E2E run.
+2026-10-31 v0.3 cloud-browser attempt: automatic approval review rejected opening
+http://127.0.0.1:18788 because the review service hit a usage limit.
+No alternate browser/CDP route was attempted to bypass this rejection.
+Visual UI, installation, previews and notification behavior remain unverified.

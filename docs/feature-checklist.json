@@ -1,0 +1,248 @@
+{
+  "criteria": 40,
+  "accepted": 21,
+  "acceptance_percent": 52.5,
+  "method": "Equal weight; no partial credit. This is the documented acceptance checklist, not a percentage of universal intelligence or production readiness.",
+  "features": [
+    {
+      "id": 1,
+      "criterion": "Recover and verify prior source/tests",
+      "status": "passed",
+      "evidence_or_gap": "41-test baseline rerun"
+    },
+    {
+      "id": 2,
+      "criterion": "Durable mission queue",
+      "status": "passed",
+      "evidence_or_gap": "SQLite reopen and competing-claim tests"
+    },
+    {
+      "id": 3,
+      "criterion": "Crash recovery and consistent backup",
+      "status": "passed",
+      "evidence_or_gap": "Actual process exit and backup restore tests"
+    },
+    {
+      "id": 4,
+      "criterion": "Pause/resume/cancel including child tasks",
+      "status": "passed",
+      "evidence_or_gap": "Control fencing and team cancellation tests"
+    },
+    {
+      "id": 5,
+      "criterion": "Mission watchdog",
+      "status": "passed",
+      "evidence_or_gap": "Late model fixture cannot commit after deadline"
+    },
+    {
+      "id": 6,
+      "criterion": "Durable delegated tasks",
+      "status": "passed",
+      "evidence_or_gap": "Real three-child integrated demonstration"
+    },
+    {
+      "id": 7,
+      "criterion": "Dependency-aware workflows",
+      "status": "passed",
+      "evidence_or_gap": "Execution order and pre-execution cycle rejection"
+    },
+    {
+      "id": 8,
+      "criterion": "Recurring scheduling",
+      "status": "passed",
+      "evidence_or_gap": "Atomic/coalesced ticks tested locally"
+    },
+    {
+      "id": 9,
+      "criterion": "Project-scoped searchable memory",
+      "status": "passed",
+      "evidence_or_gap": "Scope, literal search and expiry tests"
+    },
+    {
+      "id": 10,
+      "criterion": "Private artifact storage/downloads",
+      "status": "passed",
+      "evidence_or_gap": "Actual HTTP downloads; hash, quota and symlink tests"
+    },
+    {
+      "id": 11,
+      "criterion": "API authentication and rate limits",
+      "status": "passed",
+      "evidence_or_gap": "401/429/origin/path boundary tests"
+    },
+    {
+      "id": 12,
+      "criterion": "Secret-file loading",
+      "status": "passed",
+      "evidence_or_gap": "Regular-file, symlink and conflict boundaries"
+    },
+    {
+      "id": 13,
+      "criterion": "API request quotas and spending reservations",
+      "status": "passed",
+      "evidence_or_gap": "Zero-spend and concurrent reservation tests; not invoice reconciliation"
+    },
+    {
+      "id": 14,
+      "criterion": "Local numerical analysis",
+      "status": "passed",
+      "evidence_or_gap": "Actual worker and HTTP tests"
+    },
+    {
+      "id": 15,
+      "criterion": "Local document creation",
+      "status": "passed",
+      "evidence_or_gap": "Actual markdown artifact downloaded"
+    },
+    {
+      "id": 16,
+      "criterion": "Bounded local MP4 rendering",
+      "status": "passed",
+      "evidence_or_gap": "Real 360x640 H.264/AAC output and frame inspection"
+    },
+    {
+      "id": 17,
+      "criterion": "Historical paper simulator",
+      "status": "passed",
+      "evidence_or_gap": "Deterministic fee/causality tests on supplied sample prices"
+    },
+    {
+      "id": 18,
+      "criterion": "Fixed deterministic regression gates",
+      "status": "passed",
+      "evidence_or_gap": "Passing/rejected candidates tested"
+    },
+    {
+      "id": 19,
+      "criterion": "Routing configuration promotion/rollback",
+      "status": "passed",
+      "evidence_or_gap": "Versioned configurations and rollback tests"
+    },
+    {
+      "id": 20,
+      "criterion": "API-to-worker-to-artifact integration",
+      "status": "passed",
+      "evidence_or_gap": "Integrated demonstration and restore transcript"
+    },
+    {
+      "id": 21,
+      "criterion": "Worker monitoring and local performance measurement",
+      "status": "passed",
+      "evidence_or_gap": "Health staleness test and 100-mission measurement"
+    },
+    {
+      "id": 22,
+      "criterion": "Complete browser/PWA interaction and installability",
+      "status": "blocked",
+      "evidence_or_gap": "UI implemented; Chromium absent and cloud browser approval usage-limited"
+    },
+    {
+      "id": 23,
+      "criterion": "All six real provider connections",
+      "status": "blocked",
+      "evidence_or_gap": "Adapters mocked; no live credentials"
+    },
+    {
+      "id": 24,
+      "criterion": "Real local/open-source model inference",
+      "status": "blocked",
+      "evidence_or_gap": "Loopback adapter present; no installed model/runtime verified"
+    },
+    {
+      "id": 25,
+      "criterion": "Real independent model-to-model debate",
+      "status": "blocked",
+      "evidence_or_gap": "Orchestration fixtures pass; no live conversation"
+    },
+    {
+      "id": 26,
+      "criterion": "Live failover and quality-based routing",
+      "status": "blocked",
+      "evidence_or_gap": "Logic tested; needs live provider outage/benchmark evidence"
+    },
+    {
+      "id": 27,
+      "criterion": "Live high-level goal-to-artifact agent",
+      "status": "blocked",
+      "evidence_or_gap": "Bounded planner tested with fixtures only"
+    },
+    {
+      "id": 28,
+      "criterion": "Sandboxed code generation/test/repair",
+      "status": "blocked",
+      "evidence_or_gap": "Approval path implemented; Docker execution unverified"
+    },
+    {
+      "id": 29,
+      "criterion": "Private GitHub push/draft PR and remote CI",
+      "status": "blocked",
+      "evidence_or_gap": "Repository inaccessible; draft adapter mocked"
+    },
+    {
+      "id": 30,
+      "criterion": "Live browser/research/MCP automation",
+      "status": "blocked",
+      "evidence_or_gap": "Subset adapter present; no live server validated"
+    },
+    {
+      "id": 31,
+      "criterion": "Durable Google Drive OAuth workflow",
+      "status": "unfinished",
+      "evidence_or_gap": "List adapter only; OAuth refresh incomplete"
+    },
+    {
+      "id": 32,
+      "criterion": "Verified Telegram notifications",
+      "status": "blocked",
+      "evidence_or_gap": "Approval-gated connector needs bot and destination"
+    },
+    {
+      "id": 33,
+      "criterion": "Natural-voice character animation/YouTube production",
+      "status": "unfinished",
+      "evidence_or_gap": "Only technical title-card MP4 demonstrated"
+    },
+    {
+      "id": 34,
+      "criterion": "Indian institutional/market research and portfolio risk engine",
+      "status": "unfinished",
+      "evidence_or_gap": "Only supplied-price long-only simulator available"
+    },
+    {
+      "id": 35,
+      "criterion": "General full-stack autonomous software delivery",
+      "status": "unfinished",
+      "evidence_or_gap": "Current coding scope is single-file Python"
+    },
+    {
+      "id": 36,
+      "criterion": "Semantic long-term knowledge retrieval",
+      "status": "unfinished",
+      "evidence_or_gap": "Current search is literal, scoped and bounded"
+    },
+    {
+      "id": 37,
+      "criterion": "Live benchmark-driven improvement evidence",
+      "status": "blocked",
+      "evidence_or_gap": "Frozen suite implemented; no live scores or demonstrated AI improvement"
+    },
+    {
+      "id": 38,
+      "criterion": "Docker build and runtime isolation verification",
+      "status": "blocked",
+      "evidence_or_gap": "Configuration checked statically; Docker unavailable"
+    },
+    {
+      "id": 39,
+      "criterion": "Persistent cloud/TLS/reboot/off-host restore",
+      "status": "blocked",
+      "evidence_or_gap": "No deployed service or verified destination"
+    },
+    {
+      "id": 40,
+      "criterion": "Production multi-user/security hardening",
+      "status": "unfinished",
+      "evidence_or_gap": "Private alpha; mature public perimeter, encrypted storage and broader audit remain"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+name: TITAN verification
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: titan-ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-dev.txt
+      - run: python -m unittest discover -s tests -v
+      - run: python -m compileall -q titan
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --ignore-scripts playwright@1.62.1
+      - run: npx playwright install --with-deps chromium
+      - run: node tests/e2e.cjs
+
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Compose structure
+        run: |
+          cp .env.example .env
+          mkdir -p .secrets
+          python -c "import secrets; open('.secrets/titan_token','w').write(secrets.token_urlsafe(32))"
+          docker compose config --quiet
+      - run: docker build -t titan-ci .
+      - name: Verify container startup and health
+        shell: bash
+        run: |
+          export TITAN_TOKEN="$(python -c 'import secrets; print(secrets.token_urlsafe(32))')"
+          docker run -d --name titan-ci --read-only --tmpfs /tmp --cap-drop ALL --security-opt no-new-privileges -e TITAN_TOKEN -v titan-ci-data:/data -p 127.0.0.1:18787:8787 titan-ci
+          for attempt in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:18787/healthz; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - if: always()
+        run: docker rm -f titan-ci || true

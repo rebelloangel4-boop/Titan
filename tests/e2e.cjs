@@ -1,0 +1,20 @@
+// Local browser integration tests. No external providers or APIs are mocked as live.
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const {spawn}=require('child_process');const crypto=require('crypto');const fs=require('fs');const os=require('os');const path=require('path');
+(async()=>{const dir=fs.mkdtempSync(path.join(os.tmpdir(),'titan-e2e-'));const token=crypto.randomBytes(32).toString('hex');const port=18787;
+const server=spawn('python',['-m','titan.server','--port',String(port),'--db',path.join(dir,'test.db')],{env:{...process.env,TITAN_TOKEN:token},stdio:['ignore','pipe','pipe']});
+let browser;
+try{await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('exit',code=>reject(Error('Server exited '+code)));setTimeout(()=>reject(Error('Server startup timeout')),10000).unref();});
+browser=await chromium.launch({headless:true,args:['--no-sandbox']});const page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,deviceScaleFactor:1});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+await page.goto('http://127.0.0.1:'+port);await page.locator('#token').fill(token);await page.getByRole('button',{name:'Connect securely'}).click();await page.locator('#workspace').waitFor({state:'visible'});
+await page.locator('#objective').fill('Analyze test production durations');await page.locator('#kind').selectOption('analysis');await page.locator('#payload').fill('{"values":[10,20,30,40]}');await page.getByRole('button',{name:'Queue mission'}).click();await page.getByText('analysis · completed · attempt 1',{exact:true}).waitFor({timeout:15000});
+await page.getByText('View result',{exact:true}).click();if(!(await page.locator('#queue pre').innerText()).includes('25'))throw Error('Wrong analysis result');
+await page.getByRole('button',{name:'Memory',exact:true}).click();await page.locator('#memory-key').fill('e2e');await page.locator('#memory-value').fill('<img src=x onerror=alert(1)>');await page.getByRole('button',{name:'Save memory'}).click();await page.locator('#memory-list').getByText('<img src=x onerror=alert(1)>',{exact:true}).waitFor();if(await page.locator('#memory-list img').count())throw Error('XSS inserted HTML');
+await page.getByRole('button',{name:'Benchmarks',exact:true}).click();await page.getByRole('button',{name:'Run fixed benchmark'}).click();await page.waitForFunction(()=>document.querySelector('#benchmarks-list').textContent.includes('benchmark_passed'));
+await page.getByRole('button',{name:'Missions',exact:true}).click();if(await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth))throw Error('Mobile overflow');
+fs.mkdirSync('docs/evidence',{recursive:true});await page.screenshot({path:'docs/evidence/mobile-dashboard.png',fullPage:true});
+await page.setViewportSize({width:1440,height:1000});await page.screenshot({path:'docs/evidence/desktop-dashboard.png',fullPage:true});
+await page.evaluate(()=>navigator.serviceWorker.ready);const cachesFound=await page.evaluate(()=>caches.keys());if(!cachesFound.includes('titan-shell-v3'))throw Error('PWA shell cache missing');
+await page.getByRole('button',{name:'Lock',exact:true}).click();if(await page.locator('#workspace').isVisible())throw Error('Lock failed');if(errors.length)throw Error(errors.join('\n'));
+console.log('PASS: mobile login, mission creation, worker completion, result, memory XSS boundary, benchmark, responsive layout, PWA shell, lock; zero browser errors.');
+}catch(e){console.error(e);process.exitCode=1;}finally{if(browser)await browser.close();server.kill('SIGTERM');fs.rmSync(dir,{recursive:true,force:true});}})();

@@ -1,0 +1,24 @@
+[Unit]
+Description=TITAN private mission control
+After=network-online.target
+Wants=network-online.target
+[Service]
+Type=simple
+User=titan
+Group=titan
+WorkingDirectory=/opt/titan
+EnvironmentFile=/etc/titan/titan.env
+ExecStart=/usr/bin/python3 -m titan.server --host 127.0.0.1 --port 8787 --db /var/lib/titan/titan.db
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=20
+StateDirectory=titan
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/titan
+RestrictSUIDSGID=true
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,2 @@
+# Test/config-validation dependency only; production backend uses the standard library.
+PyYAML==6.0.3

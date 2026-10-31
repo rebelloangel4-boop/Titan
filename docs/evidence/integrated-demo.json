@@ -1,0 +1,208 @@
+{
+  "date_utc": "2026-10-31T13:35:17Z",
+  "model_calls": 0,
+  "project": "6f280fd4705845b2b61cbb372fb29348",
+  "team": {
+    "id": "715341ffb68e4d7e8648eeec02f75033",
+    "objective": "Create a local research package",
+    "kind": "team",
+    "payload": {
+      "tasks": [
+        {
+          "objective": "Analyze durations",
+          "kind": "analysis",
+          "payload": {
+            "values": [
+              24,
+              26,
+              25,
+              25
+            ]
+          }
+        },
+        {
+          "objective": "Write report",
+          "kind": "document",
+          "payload": {
+            "title": "TITAN verified local demo",
+            "text": "This report was generated through the authenticated API and a durable child worker. Inputs are synthetic. External AI calls: zero."
+          }
+        },
+        {
+          "objective": "Paper simulation",
+          "kind": "backtest",
+          "payload": {
+            "prices": [
+              100,
+              101,
+              102,
+              103,
+              102,
+              104,
+              105,
+              106,
+              104,
+              107
+            ],
+            "window": 3,
+            "fee_bps": 10
+          }
+        }
+      ]
+    },
+    "status": "completed",
+    "created": 1793453717.2358432,
+    "due": 1793453717.2358432,
+    "attempts": 1,
+    "max_attempts": 3,
+    "expires": 1793453807.3020723,
+    "checkpoint": {},
+    "result": {
+      "children": [
+        {
+          "id": "8455d27e8c894fd6936ab95fb757342b",
+          "status": "completed",
+          "result": {
+            "count": 4,
+            "sum": 100.0,
+            "mean": 25,
+            "min": 24,
+            "max": 26,
+            "median": 25.0,
+            "verification": "deterministic_python_statistics"
+          },
+          "error": null
+        },
+        {
+          "id": "f1a9cadf24b748f08e91f3ccc2ad8df9",
+          "status": "completed",
+          "result": {
+            "artifact_id": "c146319b6e414f4a8d2404f5c9771b06",
+            "name": "report.md",
+            "size": 160,
+            "sha256": "10daed38ab5fd56d3fed5f44eca27461bea7981019211cb440f33d9f7f243b4c",
+            "mime": "text/markdown"
+          },
+          "error": null
+        },
+        {
+          "id": "79c4eebcbe0e4114888dd1a6f3a02f8c",
+          "status": "completed",
+          "result": {
+            "initial_capital": 100000,
+            "final_equity": 99600.59960009999,
+            "return_pct": -0.3994003999000073,
+            "max_drawdown_pct": 1.9849056603773563,
+            "trades": 4,
+            "curve": [
+              {
+                "bar": 3,
+                "position": 1,
+                "equity": 100879.411765
+              },
+              {
+                "bar": 4,
+                "position": 1,
+                "equity": 99900.0
+              },
+              {
+                "bar": 5,
+                "position": 0,
+                "equity": 99800.1
+              },
+              {
+                "bar": 6,
+                "position": 1,
+                "equity": 100658.95663
+              },
+              {
+                "bar": 7,
+                "position": 1,
+                "equity": 101617.61336
+              },
+              {
+                "bar": 8,
+                "position": 1,
+                "equity": 99700.2999
+              },
+              {
+                "bar": 9,
+                "position": 0,
+                "equity": 99600.5996
+              }
+            ],
+            "verification": "deterministic_historical_paper_simulation",
+            "limitations": [
+              "User-supplied closing prices; not verified market data",
+              "No live orders, taxes, liquidity, corporate actions or intrabar fills",
+              "Long-only unit exposure; no leverage; no prediction of future returns"
+            ],
+            "artifact": {
+              "artifact_id": "8518f43b4d544929a32c2eb05f60884a",
+              "name": "paper-backtest.json",
+              "size": 1021,
+              "sha256": "27ad151997c6d8be0ae94f051c7e015fe2efee4f7ed4ab3958e95e570b9db0e4",
+              "mime": "application/json"
+            }
+          },
+          "error": null
+        }
+      ],
+      "all_succeeded": true,
+      "verification": "Delegated execution records; inspect each child verification"
+    },
+    "error": null,
+    "project": "6f280fd4705845b2b61cbb372fb29348",
+    "parent": null
+  },
+  "video": {
+    "id": "749188e0cba048a0ac5bf7a13d6f301a",
+    "objective": "Render local preview",
+    "kind": "video",
+    "payload": {
+      "title": "TITAN VERIFIED LOCAL DEMO",
+      "seconds": 3
+    },
+    "status": "completed",
+    "created": 1793453717.3147886,
+    "due": 1793453717.3147888,
+    "attempts": 1,
+    "max_attempts": 3,
+    "expires": 1793453807.3208413,
+    "checkpoint": {},
+    "result": {
+      "artifact_id": "b27cfb3fa0c643bcbb58bcd6b6dafdaf",
+      "name": "titan-preview.mp4",
+      "size": 59341,
+      "sha256": "b6af6fbba92aef60f62b91011c75f98d8c5f9189802b041f04859b771b7539b3",
+      "mime": "video/mp4",
+      "duration": 3.0,
+      "width": 360,
+      "height": 640,
+      "verification": "ffprobe_audio_video_streams",
+      "style": "Animated title card with synthetic tone; no natural voice or character animation"
+    },
+    "error": null,
+    "project": "6f280fd4705845b2b61cbb372fb29348",
+    "parent": null
+  },
+  "artifacts": [
+    {
+      "name": "titan-preview.mp4",
+      "size": 59341,
+      "sha256": "b6af6fbba92aef60f62b91011c75f98d8c5f9189802b041f04859b771b7539b3"
+    },
+    {
+      "name": "paper-backtest.json",
+      "size": 1021,
+      "sha256": "27ad151997c6d8be0ae94f051c7e015fe2efee4f7ed4ab3958e95e570b9db0e4"
+    },
+    {
+      "name": "report.md",
+      "size": 160,
+      "sha256": "10daed38ab5fd56d3fed5f44eca27461bea7981019211cb440f33d9f7f243b4c"
+    }
+  ],
+  "api_download_hashes_verified": true,
+  "database_restore_verified": true
+}
