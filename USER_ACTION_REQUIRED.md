@@ -6,7 +6,7 @@ Do these in order. You do not need to write code, fix tests, or perform manual v
 
 **Why you:** No provider API keys are configured in this execution environment. Account authentication and acceptance of provider terms must be yours.
 
-**Needed:** Two usable provider accounts and API keys, with supported model IDs. Start with providers whose free quotas are available to your accounts; Gemini and Groq adapters are prepared. OpenAI, Claude, DeepSeek and Grok are optional additions. A local OpenAI-compatible endpoint is also supported if you already have a capable host and model.
+**Needed:** Two usable provider accounts and API keys, with supported model IDs. Your requested providers are OpenAI, Gemini, Grok and Claude. Start with two whose API access and acceptable quotas are available to you, then add the others. No paid inference is authorized. A local OpenAI-compatible endpoint is also supported if you already have a capable host and model.
 
 **Cost:** Provider/model dependent. Do not enable paid inference or link a payment method just to bypass a quota without reviewing costs. A ChatGPT subscription is not a TITAN API credential.
 

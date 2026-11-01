@@ -2,7 +2,7 @@
 
 A functioning local mission-control platform with project workspaces, durable delegated tasks, recurring schedules, searchable memory, artifact management, provider failover, approved code testing, narrow regression gates and an Android-oriented dashboard.
 
-**100 local tests pass. 21 of 40 documented acceptance criteria are verified (55%). No cloud deployment or live model inference has been verified.** See FEATURE_CHECKLIST.md for the precise denominator, PROJECT_STATUS.md for unfinished engineering and USER_ACTION_REQUIRED.md for account tasks.
+**111 local tests pass. 23 of 40 documented acceptance criteria are verified (57.5%). Real local embedding inference passes CI; remote chat-model inference and cloud deployment remain unverified.** See FEATURE_CHECKLIST.md for the precise denominator, PROJECT_STATUS.md for unfinished engineering and USER_ACTION_REQUIRED.md for account tasks.
 
 A real authenticated API-to-worker demonstration creates reports, runs a paper simulation, renders a playable H.264/AAC MP4, verifies downloads and restores the database. The video is a technical animated title card, not natural-voice character production.
 
@@ -38,7 +38,7 @@ Create a debate with `{"providers":["gemini","groq"]}`. Each model sees the obje
 - `chat`: persisted conversation using ranked providers and failover.
 - `agent`: high-level goal to bounded analysis/document/video/backtest plan; model planning remains unverified until real keys are configured.
 - `team`: up to eight durable delegated child missions; parent waits and reports child outcomes.
-- `code`: single-file Python generation, exact sandbox approval, tests and up to three repair candidates; real sandbox execution/isolation passes CI; live model-generated repair remains unverified.
+- `code`: bounded multi-file Python generation, exact sandbox approval, tests and up to three repair candidates; real sandbox execution/isolation passes CI; live model-generated repair remains unverified.
 - `document`, `video`, `backtest`: real local deliverable workflows. Prices must be supplied; outputs are private.
 - `model_benchmark`: frozen three-case exact-answer suite with per-model scoped routing quality. It does not measure universal intelligence.
 - `workflow`: operator-defined DAG of analysis and approved tool steps. Full dependency validation precedes any action; completed steps are checkpointed.
@@ -96,3 +96,7 @@ Set `TITAN_LOCAL_ENABLED=1`, `TITAN_MODEL_LOCAL=<installed-model>` and a loopbac
 ## Secrets and deployment
 
 Secret variables can use the corresponding `_FILE` variable (for example `GROQ_API_KEY_FILE`). Configure exactly one source. Never commit real `.env` files or secret files. The Docker Compose API reads the operator token from `.secrets/titan_token` and shares a persistent data volume with the worker. See docs/DEPLOYMENT.md before running it. Nothing is deployed by downloading this package.
+
+## Optional semantic memory
+
+See [semantic setup and limits](docs/SEMANTIC_MEMORY.md). The real CPU embedding benchmark passed without provider API keys. This does not enable chat/debate inference.

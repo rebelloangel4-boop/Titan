@@ -1,6 +1,6 @@
 # TITAN evidence-based acceptance checklist
 
-**22/40 criteria accepted = 55%.** Equal weights; partial criteria get no credit. This is not a production-readiness percentage.
+**23/40 criteria accepted = 57.5%.** Equal weights; partial criteria get no credit. This is not a production-readiness percentage.
 
 | # | Acceptance criterion | Status | Evidence or gap |
 |---|---|---|---|
@@ -38,8 +38,8 @@
 | 32 | Verified Telegram notifications | blocked | Approval-gated connector needs bot and destination |
 | 33 | Natural-voice character animation/YouTube production | unfinished | Only technical title-card MP4 demonstrated |
 | 34 | Indian institutional/market research and portfolio risk engine | unfinished | Only supplied-price long-only simulator available |
-| 35 | General full-stack autonomous software delivery | unfinished | Current coding scope is single-file Python |
-| 36 | Semantic long-term knowledge retrieval | unfinished | Ranked lexical BM25 retrieval implemented; semantic embeddings not yet implemented. |
+| 35 | General full-stack autonomous software delivery | unfinished | Bounded multi-file Python implemented; general full-stack delivery remains unfinished |
+| 36 | Semantic long-term knowledge retrieval | passed | Pinned real local embedding model: six frozen paraphrases, project/expiry isolation, updates and fresh-process cache reuse pass CI 41295972496. Bounded English retrieval, not unrestricted knowledge. |
 | 37 | Live benchmark-driven improvement evidence | blocked | Frozen suite implemented; no live scores or demonstrated AI improvement |
 | 38 | Docker build and runtime isolation verification | passed | GitHub run 41280541414: real Docker build/startup, UID, read-only root/source, network blocking, secret isolation, bounded output and cleanup tests pass. |
 | 39 | Persistent cloud/TLS/reboot/off-host restore | blocked | No deployed service or verified destination |

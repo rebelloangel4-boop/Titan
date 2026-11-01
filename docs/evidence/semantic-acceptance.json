@@ -1,0 +1,52 @@
+{
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "suite_sha256": "2d3e3f534dfd2b1abefceadb282c4b0df09edbb41763dba32029e0f2d536b1ec",
+  "top1_accuracy": 1,
+  "required_accuracy": 1,
+  "queries": [
+    {
+      "query": "My car engine gets too hot. What should I do?",
+      "expected": "m1",
+      "actual": "m1",
+      "passed": true
+    },
+    {
+      "query": "How should passwords and API keys be protected?",
+      "expected": "m2",
+      "actual": "m2",
+      "passed": true
+    },
+    {
+      "query": "Continue pending jobs following a crash",
+      "expected": "m3",
+      "actual": "m3",
+      "passed": true
+    },
+    {
+      "query": "How can we restore lost data if storage breaks?",
+      "expected": "m4",
+      "actual": "m4",
+      "passed": true
+    },
+    {
+      "query": "Where should subtitles go in portrait videos?",
+      "expected": "m5",
+      "actual": "m5",
+      "passed": true
+    },
+    {
+      "query": "Ask a person for permission before destructive actions",
+      "expected": "m6",
+      "actual": "m6",
+      "passed": true
+    }
+  ],
+  "project_isolation": true,
+  "expired_memory_excluded": true,
+  "process_restart_cache": true,
+  "update_invalidation": true,
+  "elapsed_seconds": 9.983,
+  "external_inference_calls": 0,
+  "ci_run": "https://github.com/rebelloangel4-boop/Titan/actions/runs/41295972496"
+}

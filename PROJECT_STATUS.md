@@ -1,3 +1,20 @@
+# TITAN current project status
+
+## Current checkpoint — 2026-11-01
+
+Canonical source: https://github.com/rebelloangel4-boop/Titan (public, explicitly authorized). **111 local tests pass; 23/40 criteria accepted = 57.5%.** This is an acceptance checklist score, not production readiness.
+
+Pinned local semantic embeddings passed six frozen paraphrase queries, project and expiry isolation, content-update invalidation and cached-vector reuse in a fresh process. Evidence: `docs/evidence/semantic-acceptance.json`, GitHub CI 41295972496. No remote chat-model calls occurred. See `docs/SEMANTIC_MEMORY.md` for optional setup and bounded retrieval limitations.
+
+Coding supports up to 16 Python files with explicit packages, approved container execution, optional operator acceptance tests, nonempty test summaries and ZIP artifacts. Empty/all-skipped tests or premature exits are rejected. Generated code and tests still share a container: the reported test result is not an independent correctness proof or evidence of live AI coding success.
+
+The actual HTTP-to-worker demonstration passed again, producing report, paper-simulation and MP4 artifacts and restoring the database. No cloud service or persistent background continuation is running. Provider credentials and hosting remain deferred by the user; other unfinished engineering is retained in FEATURE_CHECKLIST.md.
+
+
+Latest coding acceptance: GitHub run https://github.com/rebelloangel4-boop/Titan/actions/runs/41296234906 passed Python, Chromium browser and Docker jobs. Six real sandbox tests passed, including multi-file package imports, an operator test detecting an incorrect implementation, rejection of no tests/early exit, exact one-use approval, isolation, nonzero exit and output bounds. Docker image startup/health and Compose validation passed. The real semantic benchmark rerun also passed: all four jobs succeeded.
+
+Earlier dated checkpoints below are historical and superseded by this section.
+
 # TITAN checkpoint v0.3 — 2026-10-31
 
 ## Outcome
