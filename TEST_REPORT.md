@@ -76,3 +76,5 @@ Re-executed the unchanged baseline: 82 passed. After ranked project-memory retri
 - Follow-up https://github.com/rebelloangel4-boop/Titan/actions/runs/41280541414 passed all three jobs. Four sandbox tests exercised nonroot UID, no injected host secret, cleared proxy, read-only root/source, disabled networking, nonzero exit propagation, one-use approval, output ceiling and no leaked container.
 - Existing mobile/desktop Chromium workflow passed. Expanded project switching, artifact preview persistence/download, schedule controls and lock cleanup checks added; results must be checked on their commit.
 - No real model, Google Drive, Telegram or persistent hosting verification.
+
+Final follow-up: **100 local tests passed** after adding archive-hash tamper rejection. Expanded browser checks passed in https://github.com/rebelloangel4-boop/Titan/actions/runs/41280662233; Python and container jobs also passed. Latest local integrated demonstration repeated successfully with the same artifact hashes.

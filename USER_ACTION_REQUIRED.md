@@ -24,7 +24,7 @@ Do these in order. You do not need to write code, fix tests, or perform manual v
 
 **Simplest safe steps:** Tell me whether you have an Oracle account and an existing free VM, or another Linux host. Share resource identifiers, not private SSH keys/passwords. Use a supported secure connection/secret mechanism for host access. If you prefer Render, confirm the intended workspace and review any proposed charge before creation.
 
-**Afterward:** I can attempt the Docker build, sandbox acceptance tests, HTTPS deployment, persistent worker configuration, restart/restore tests and Android PWA verification. The prepared deployment package alone does not start a service.
+**Afterward:** Docker build and sandbox acceptance tests already pass CI. With authorized hosting I can perform HTTPS deployment, persistent worker configuration, host restart/off-host restore tests and Android PWA verification. The prepared deployment package alone does not start a service.
 
 ## 3. Optional service connections, after the core works
 

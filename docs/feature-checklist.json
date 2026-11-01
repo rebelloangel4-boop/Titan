@@ -134,7 +134,7 @@
       "id": 22,
       "criterion": "Complete browser/PWA interaction and installability",
       "status": "partial",
-      "evidence_or_gap": "Mobile/desktop Chromium CI passes; expanded flows under test. Real Android installability remains unverified."
+      "evidence_or_gap": "Chromium CI run 41280662233 passes project isolation, document preview/download, schedules, lock and responsive checks; real Android installation remains unverified."
     },
     {
       "id": 23,

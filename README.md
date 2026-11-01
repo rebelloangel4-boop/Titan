@@ -2,7 +2,7 @@
 
 A functioning local mission-control platform with project workspaces, durable delegated tasks, recurring schedules, searchable memory, artifact management, provider failover, approved code testing, narrow regression gates and an Android-oriented dashboard.
 
-**99 local tests pass. 21 of 40 documented acceptance criteria are verified (55%). No cloud deployment or live model inference has been verified.** See FEATURE_CHECKLIST.md for the precise denominator, PROJECT_STATUS.md for unfinished engineering and USER_ACTION_REQUIRED.md for account tasks.
+**100 local tests pass. 21 of 40 documented acceptance criteria are verified (55%). No cloud deployment or live model inference has been verified.** See FEATURE_CHECKLIST.md for the precise denominator, PROJECT_STATUS.md for unfinished engineering and USER_ACTION_REQUIRED.md for account tasks.
 
 A real authenticated API-to-worker demonstration creates reports, runs a paper simulation, renders a playable H.264/AAC MP4, verifies downloads and restores the database. The video is a technical animated title card, not natural-voice character production.
 
@@ -38,7 +38,7 @@ Create a debate with `{"providers":["gemini","groq"]}`. Each model sees the obje
 - `chat`: persisted conversation using ranked providers and failover.
 - `agent`: high-level goal to bounded analysis/document/video/backtest plan; model planning remains unverified until real keys are configured.
 - `team`: up to eight durable delegated child missions; parent waits and reports child outcomes.
-- `code`: single-file Python generation, exact sandbox approval, tests and up to three repair candidates; Docker execution unverified.
+- `code`: single-file Python generation, exact sandbox approval, tests and up to three repair candidates; real sandbox execution/isolation passes CI; live model-generated repair remains unverified.
 - `document`, `video`, `backtest`: real local deliverable workflows. Prices must be supplied; outputs are private.
 - `model_benchmark`: frozen three-case exact-answer suite with per-model scoped routing quality. It does not measure universal intelligence.
 - `workflow`: operator-defined DAG of analysis and approved tool steps. Full dependency validation precedes any action; completed steps are checkpointed.
@@ -57,7 +57,7 @@ The worker processes one mission at a time per process. Multiple processes can s
 
 ## Tools and permissions
 
-`github.read` is scoped repository metadata read; `github.propose` creates a new branch and draft PR in the configured private repository, with no merge/force-push and no critical-path writes; `drive.list` lists files using an externally supplied access token; `web.read` reads allowlisted JSON endpoints; `telegram.send` sends to a server-configured chat only after approval; `sandbox.python` requires disabled-by-default Docker isolation and a pinned image; `mcp.call` exposes explicitly allowlisted remote tools. All require exact operator approval, including reads that transmit private context.
+`github.read` is scoped repository metadata read; `github.propose` creates a new branch and draft PR in the configured private repository, with no merge/force-push and no critical-path writes; `drive.list` lists files using an externally supplied access token or configured refresh-token credentials; `web.read` reads allowlisted JSON endpoints; `telegram.send` sends to a server-configured chat only after approval; `sandbox.python` requires disabled-by-default Docker isolation and a pinned image; `mcp.call` exposes explicitly allowlisted remote tools. All require exact operator approval, including reads that transmit private context.
 
 MCP supports the **2025-03-26 JSON HTTP subset**, including initialization, initialized notification, and session header. SSE, stdio, server-initiated requests and newer protocol versions are not implemented. Browser automation can be connected through an approved compatible MCP tool but no browser connector has been live-tested.
 
@@ -74,7 +74,7 @@ Failures and provider latency/reliability/reserved cost are recorded. Live quali
 - `policy.py`, `improvement.py`: evaluation and rollback.
 - `server.py`, `web/`: authenticated API and Android-oriented PWA shell with projects, chat, artifacts, schedules and previews. Browser verification is blocked.
 - `tests/`: original tests plus platform, API, security, recovery, and browser checks.
-- `deploy/`, `Dockerfile`, `compose.yaml`: systemd/TLS and separate API/worker containers. Configuration is statically tested; no container build has run here.
+- `deploy/`, `Dockerfile`, `compose.yaml`: systemd/TLS and separate API/worker containers. Container builds, startup and scoped isolation tests pass GitHub CI; persistent deployment is not running.
 - `docs/evidence/`: captured test results and real offline demonstration.
 - `.github/workflows/ci.yml`: CI definition; not executed on GitHub yet.
 

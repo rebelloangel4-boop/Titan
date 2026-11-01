@@ -1,9 +1,9 @@
 {
-  "date_utc": "2026-10-31T13:35:17Z",
+  "date_utc": "2026-11-01T06:24:00Z",
   "model_calls": 0,
-  "project": "6f280fd4705845b2b61cbb372fb29348",
+  "project": "987b4e0c3e6a444588199803645fafac",
   "team": {
-    "id": "715341ffb68e4d7e8648eeec02f75033",
+    "id": "9c479d95744d477e86fc8217d6072524",
     "objective": "Create a local research package",
     "kind": "team",
     "payload": {
@@ -51,16 +51,16 @@
       ]
     },
     "status": "completed",
-    "created": 1793453717.2358432,
-    "due": 1793453717.2358432,
+    "created": 1793514240.1108046,
+    "due": 1793514240.1108048,
     "attempts": 1,
     "max_attempts": 3,
-    "expires": 1793453807.3020723,
+    "expires": 1793514330.1529152,
     "checkpoint": {},
     "result": {
       "children": [
         {
-          "id": "8455d27e8c894fd6936ab95fb757342b",
+          "id": "7b220b18835c473e98dfc824d49adb1b",
           "status": "completed",
           "result": {
             "count": 4,
@@ -74,10 +74,10 @@
           "error": null
         },
         {
-          "id": "f1a9cadf24b748f08e91f3ccc2ad8df9",
+          "id": "33e3205fa902413196179a212a63f364",
           "status": "completed",
           "result": {
-            "artifact_id": "c146319b6e414f4a8d2404f5c9771b06",
+            "artifact_id": "013a3fc9aeed4d938f433c5f76a74810",
             "name": "report.md",
             "size": 160,
             "sha256": "10daed38ab5fd56d3fed5f44eca27461bea7981019211cb440f33d9f7f243b4c",
@@ -86,7 +86,7 @@
           "error": null
         },
         {
-          "id": "79c4eebcbe0e4114888dd1a6f3a02f8c",
+          "id": "7a5f4060006e48cfb627d2b038ba3a85",
           "status": "completed",
           "result": {
             "initial_capital": 100000,
@@ -138,7 +138,7 @@
               "Long-only unit exposure; no leverage; no prediction of future returns"
             ],
             "artifact": {
-              "artifact_id": "8518f43b4d544929a32c2eb05f60884a",
+              "artifact_id": "3f29d21e90ab4b5bb48e9b3c3c54ef6b",
               "name": "paper-backtest.json",
               "size": 1021,
               "sha256": "27ad151997c6d8be0ae94f051c7e015fe2efee4f7ed4ab3958e95e570b9db0e4",
@@ -152,11 +152,11 @@
       "verification": "Delegated execution records; inspect each child verification"
     },
     "error": null,
-    "project": "6f280fd4705845b2b61cbb372fb29348",
+    "project": "987b4e0c3e6a444588199803645fafac",
     "parent": null
   },
   "video": {
-    "id": "749188e0cba048a0ac5bf7a13d6f301a",
+    "id": "f5281df1166e43c7bcd6ac5fac6854cb",
     "objective": "Render local preview",
     "kind": "video",
     "payload": {
@@ -164,14 +164,14 @@
       "seconds": 3
     },
     "status": "completed",
-    "created": 1793453717.3147886,
-    "due": 1793453717.3147888,
+    "created": 1793514240.1626108,
+    "due": 1793514240.162611,
     "attempts": 1,
     "max_attempts": 3,
-    "expires": 1793453807.3208413,
+    "expires": 1793514330.167539,
     "checkpoint": {},
     "result": {
-      "artifact_id": "b27cfb3fa0c643bcbb58bcd6b6dafdaf",
+      "artifact_id": "4ff4f01c382742d18f8d429b87ba30b2",
       "name": "titan-preview.mp4",
       "size": 59341,
       "sha256": "b6af6fbba92aef60f62b91011c75f98d8c5f9189802b041f04859b771b7539b3",
@@ -183,7 +183,7 @@
       "style": "Animated title card with synthetic tone; no natural voice or character animation"
     },
     "error": null,
-    "project": "6f280fd4705845b2b61cbb372fb29348",
+    "project": "987b4e0c3e6a444588199803645fafac",
     "parent": null
   },
   "artifacts": [

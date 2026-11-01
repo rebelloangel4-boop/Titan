@@ -1,0 +1,27 @@
+{
+  "as_of": "2026-11-01",
+  "runs": [
+    {
+      "id": 41280541414,
+      "status": "success",
+      "jobs": [
+        "python",
+        "browser",
+        "container"
+      ],
+      "sandbox_tests": 4
+    },
+    {
+      "id": 41280662233,
+      "status": "success",
+      "jobs": [
+        "python",
+        "browser",
+        "container"
+      ],
+      "expanded_browser": true
+    }
+  ],
+  "live_provider_calls": 0,
+  "deployment": false
+}

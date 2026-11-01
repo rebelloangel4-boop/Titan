@@ -25,7 +25,7 @@
 | 19 | Routing configuration promotion/rollback | passed | Versioned configurations and rollback tests |
 | 20 | API-to-worker-to-artifact integration | passed | Integrated demonstration and restore transcript |
 | 21 | Worker monitoring and local performance measurement | passed | Health staleness test and 100-mission measurement |
-| 22 | Complete browser/PWA interaction and installability | partial | Mobile/desktop Chromium CI passes; expanded flows under test. Real Android installability remains unverified. |
+| 22 | Complete browser/PWA interaction and installability | partial | Chromium CI run 41280662233 passes project isolation, document preview/download, schedules, lock and responsive checks; real Android installation remains unverified. |
 | 23 | All six real provider connections | blocked | Adapters mocked; no live credentials |
 | 24 | Real local/open-source model inference | blocked | Loopback adapter present; no installed model/runtime verified |
 | 25 | Real independent model-to-model debate | blocked | Orchestration fixtures pass; no live conversation |
