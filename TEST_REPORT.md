@@ -66,3 +66,13 @@ No known failing local test remains. This is **not** proof that all critical/hig
 ## Retrieval follow-up — 2026-10-31
 
 Re-executed the unchanged baseline: 82 passed. After ranked project-memory retrieval: **89 passed**, zero failures, zero skips. Seven new tests exercise relevance beyond exact phrase matching, project/expiry boundaries, explicit truncation budgets, empty/unmatched queries, argument validation, preservation of literal search, and memory delivery to chat/planning as data. Chat/planner provider responses are fixtures, not live inference. Raw final output remains docs/evidence/unittest.txt. Browser, Docker and external service limitations above are unchanged.
+
+## Independent engineering milestone — 2026-11-01
+
+- Local suite: **99 passed**, zero failures/skips; raw output docs/evidence/unittest.txt.
+- Five new snapshot tests: database/artifact roundtrip, preserve existing destination, reject corrupted artifact, reject artifact symlink, malicious archive cleanup.
+- Five new Google refresh tests: concurrent single refresh, expiry/credential rotation, missing configuration, error redaction, request format/response validation. All HTTP responses mocked; no Google request occurred.
+- Real Docker run 41280452654 exposed an output-flood cleanup deadlock. Fixed by terminating/releasing the attached client before container removal.
+- Follow-up https://github.com/rebelloangel4-boop/Titan/actions/runs/41280541414 passed all three jobs. Four sandbox tests exercised nonroot UID, no injected host secret, cleared proxy, read-only root/source, disabled networking, nonzero exit propagation, one-use approval, output ceiling and no leaked container.
+- Existing mobile/desktop Chromium workflow passed. Expanded project switching, artifact preview persistence/download, schedule controls and lock cleanup checks added; results must be checked on their commit.
+- No real model, Google Drive, Telegram or persistent hosting verification.

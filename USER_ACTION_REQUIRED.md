@@ -30,7 +30,7 @@ Do these in order. You do not need to write code, fix tests, or perform manual v
 
 **Why you:** These connect your private files, recipients or market-data account. Permissions and recipient selection must be explicit.
 
-- **Google Drive:** Authorize the particular account and file scope. The current connector accepts an access token; durable OAuth refresh still needs implementation and testing. It is not enough to connect Drive to ChatGPT and assume standalone TITAN inherits it.
+- **Google Drive:** Authorize the particular account and file scope. The current connector accepts an access token; refresh-token renewal is implemented and fixture-tested; initial consent and live verification remain. It is not enough to connect Drive to ChatGPT and assume standalone TITAN inherits it.
 - **Telegram:** Create/select your bot and confirm the exact destination chat. Store its token securely. The connector requires exact approval for each send; no notifications have been sent during development.
 - **Browser/MCP:** Select the trusted server and allowlisted tools. The current JSON HTTP adapter targets MCP 2025-03-26; verify server compatibility. Sensitive actions remain approval-gated.
 - **Indian market data:** Select a legally accessible data source and authorize any account needed. Confirm whether it has fees. Current paper tests use supplied sample prices, not live NSE/institutional data; live trading is disabled and not part of setup.

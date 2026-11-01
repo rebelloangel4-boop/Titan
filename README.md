@@ -2,7 +2,7 @@
 
 A functioning local mission-control platform with project workspaces, durable delegated tasks, recurring schedules, searchable memory, artifact management, provider failover, approved code testing, narrow regression gates and an Android-oriented dashboard.
 
-**89 local tests pass. 21 of 40 documented acceptance criteria are verified (52.5%). No cloud deployment or live model inference has been verified.** See FEATURE_CHECKLIST.md for the precise denominator, PROJECT_STATUS.md for unfinished engineering and USER_ACTION_REQUIRED.md for account tasks.
+**99 local tests pass. 21 of 40 documented acceptance criteria are verified (55%). No cloud deployment or live model inference has been verified.** See FEATURE_CHECKLIST.md for the precise denominator, PROJECT_STATUS.md for unfinished engineering and USER_ACTION_REQUIRED.md for account tasks.
 
 A real authenticated API-to-worker demonstration creates reports, runs a paper simulation, renders a playable H.264/AAC MP4, verifies downloads and restores the database. The video is a technical animated title card, not natural-voice character production.
 

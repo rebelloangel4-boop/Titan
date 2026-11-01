@@ -44,7 +44,8 @@ class ToolRegistry:
             if not re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+',repo):raise ValueError('Invalid repository')
             return request_json('https://api.github.com/repos/'+repo,{'Authorization':'Bearer '+self.secret('GITHUB_TOKEN'),'Accept':'application/vnd.github+json'})
         if tool=='drive.list':
-            return request_json('https://www.googleapis.com/drive/v3/files?pageSize=20&fields=files(id,name,mimeType)',{'Authorization':'Bearer '+self.secret('GOOGLE_ACCESS_TOKEN')})
+            from .google_auth import access_token
+            return request_json('https://www.googleapis.com/drive/v3/files?pageSize=20&fields=files(id,name,mimeType)',{'Authorization':'Bearer '+access_token()})
         if tool=='telegram.send':
             text=a.get('text','')
             if not isinstance(text,str) or not 1<=len(text)<=4000:raise ValueError('Message length invalid')

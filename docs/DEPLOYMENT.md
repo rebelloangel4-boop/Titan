@@ -57,3 +57,18 @@ Docker CLI/runtime was unavailable in the build session. These are prepared oper
 7. The optional sandbox remains disabled in this stack. A Docker client/socket is deliberately not installed/mounted in the application container. Provide a separately isolated execution design before enabling arbitrary generated code.
 
 This is still a private alpha service. A connection to Render exists, but its source-repository requirement is unmet, and persistent worker/storage choices must be reviewed against the ₹0 constraint. No Render service was created.
+
+## Complete local snapshot (database and artifacts)
+
+The database-only backup command does not include artifact bytes. For a portable snapshot:
+
+```sh
+python -m titan.snapshot create /data/titan.db /data/artifacts /backups/titan.zip
+python -m titan.snapshot restore /backups/titan.zip /new-empty-restore-directory
+```
+
+Restore refuses existing destinations and verifies file hashes, SQLite integrity, artifact/database correspondence and archive paths. Use the returned state.db path and its sibling artifacts directory. Keep backups private: they contain project data. Snapshots are not encrypted by this command. Prefer stopping workers for a coordinated operational backup; local creation reads a consistent database copy and immutable referenced artifacts. Configure encrypted off-host backups separately before production.
+
+## Google Drive token refresh
+
+Configure GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET and GOOGLE_REFRESH_TOKEN (or their _FILE sources) after completing your own Google OAuth consent with the minimum Drive scope required. The drive.list tool refreshes access tokens on expiry and caches them in memory, retaining its exact tool-approval gate. Static GOOGLE_ACCESS_TOKEN remains a fallback when no refresh token is configured. No OAuth consent UI or live Google verification has been completed. Reference: https://developers.google.com/identity/protocols/oauth2/web-server#offline

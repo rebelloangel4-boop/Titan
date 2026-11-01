@@ -50,3 +50,7 @@ GitHub connection reverified as rebelloangel4-boop. titan-ai still returns 404; 
 ## Public repository publication — 2026-10-31
 
 User explicitly authorized public source publication. Repository: https://github.com/rebelloangel4-boop/Titan. Snapshot from local commit 6745f55 imported as remote commit d2becf3794788533dd522d0934bcbb85bbdc98ab; 70 files including source, evidence and CI. Original local history remains in the saved Git bundle. Re-ran 89 tests successfully before publication. Credential-pattern scan found no matches; this is not a comprehensive secret audit. API keys and runtime databases are excluded. No deployment or live inference occurred.
+
+## Independent engineering milestone — 2026-11-01
+
+99 local tests pass. Added portable database-plus-artifact snapshots with restore validation, and Google OAuth refresh-token exchange/caching (fixture tests only). Fixed sandbox completion race and output-flood cleanup deadlock identified by actual Docker CI. GitHub run 41280541414 passed Python, browser and container jobs, including four real sandbox tests. Broader browser project/artifact/schedule checks are added for the next CI run. Criterion 38 is accepted: checklist 22/40 = 55%. This is scoped runtime evidence, not proof against kernel/container escape. No live inference, Google authorization, paid resources or persistent deployment performed. Gemini collaboration is not active.

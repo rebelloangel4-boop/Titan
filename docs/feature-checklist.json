@@ -1,7 +1,7 @@
 {
   "criteria": 40,
-  "accepted": 21,
-  "acceptance_percent": 52.5,
+  "accepted": 22,
+  "acceptance_percent": 55.0,
   "method": "Equal weight; no partial credit. This is the documented acceptance checklist, not a percentage of universal intelligence or production readiness.",
   "features": [
     {
@@ -133,8 +133,8 @@
     {
       "id": 22,
       "criterion": "Complete browser/PWA interaction and installability",
-      "status": "blocked",
-      "evidence_or_gap": "UI implemented; Chromium absent and cloud browser approval usage-limited"
+      "status": "partial",
+      "evidence_or_gap": "Mobile/desktop Chromium CI passes; expanded flows under test. Real Android installability remains unverified."
     },
     {
       "id": 23,
@@ -169,14 +169,14 @@
     {
       "id": 28,
       "criterion": "Sandboxed code generation/test/repair",
-      "status": "blocked",
-      "evidence_or_gap": "Approval path implemented; Docker execution unverified"
+      "status": "partial",
+      "evidence_or_gap": "Real Docker execution and one-use approvals pass; live model-generated coding/repair still unverified."
     },
     {
       "id": 29,
-      "criterion": "Private GitHub push/draft PR and remote CI",
-      "status": "blocked",
-      "evidence_or_gap": "Repository inaccessible; draft adapter mocked"
+      "criterion": "Authorized GitHub push/draft PR and remote CI",
+      "status": "partial",
+      "evidence_or_gap": "Public source publication explicitly authorized; push and remote CI verified. TITAN draft-PR adapter remains mocked."
     },
     {
       "id": 30,
@@ -187,8 +187,8 @@
     {
       "id": 31,
       "criterion": "Durable Google Drive OAuth workflow",
-      "status": "unfinished",
-      "evidence_or_gap": "List adapter only; OAuth refresh incomplete"
+      "status": "partial",
+      "evidence_or_gap": "Refresh-token exchange/cache implemented and fixture-tested; initial consent UI and live Drive workflow unverified."
     },
     {
       "id": 32,
@@ -218,7 +218,7 @@
       "id": 36,
       "criterion": "Semantic long-term knowledge retrieval",
       "status": "unfinished",
-      "evidence_or_gap": "Current search is literal, scoped and bounded"
+      "evidence_or_gap": "Ranked lexical BM25 retrieval implemented; semantic embeddings not yet implemented."
     },
     {
       "id": 37,
@@ -229,8 +229,8 @@
     {
       "id": 38,
       "criterion": "Docker build and runtime isolation verification",
-      "status": "blocked",
-      "evidence_or_gap": "Configuration checked statically; Docker unavailable"
+      "status": "passed",
+      "evidence_or_gap": "GitHub run 41280541414: real Docker build/startup, UID, read-only root/source, network blocking, secret isolation, bounded output and cleanup tests pass."
     },
     {
       "id": 39,

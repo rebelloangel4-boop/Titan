@@ -43,6 +43,11 @@ test_large_peer_record_is_explicitly_truncated (test_extended.QualityRouting.tes
 test_quality_uses_current_model_and_suite (test_extended.QualityRouting.test_quality_uses_current_model_and_suite) ... ok
 test_auth_rate_limit (test_extended.RateLimitHTTP.test_auth_rate_limit) ... ok
 test_slow_model_cannot_commit_after_deadline (test_extended.Watchdog.test_slow_model_cannot_commit_after_deadline) ... ok
+test_concurrent_refresh_once (test_google_auth.GoogleAuthTests.test_concurrent_refresh_once) ... ok
+test_error_redaction (test_google_auth.GoogleAuthTests.test_error_redaction) ... ok
+test_exchange_form_and_validation (test_google_auth.GoogleAuthTests.test_exchange_form_and_validation) ... ok
+test_expiry_and_rotation (test_google_auth.GoogleAuthTests.test_expiry_and_rotation) ... ok
+test_missing_config (test_google_auth.GoogleAuthTests.test_missing_config) ... ok
 test_api_requires_auth (test_platform.HTTPTests.test_api_requires_auth) ... ok
 test_http_end_to_end_analysis (test_platform.HTTPTests.test_http_end_to_end_analysis) ... ok
 test_malformed_mission (test_platform.HTTPTests.test_malformed_mission) ... ok
@@ -94,6 +99,6 @@ test_symlink_rejected (test_snapshot.SnapshotTests.test_symlink_rejected) ... ok
 test_traversal_and_cleanup (test_snapshot.SnapshotTests.test_traversal_and_cleanup) ... ok
 
 ----------------------------------------------------------------------
-Ran 94 tests in 7.127s
+Ran 99 tests in 6.927s
 
 OK
