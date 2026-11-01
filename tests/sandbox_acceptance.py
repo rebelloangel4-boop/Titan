@@ -1,5 +1,5 @@
 """Real Docker acceptance tests; intentionally run explicitly by container CI."""
-import os,tempfile,unittest
+import os,tempfile,unittest,subprocess
 from pathlib import Path
 from unittest.mock import patch
 from titan.store import Database
@@ -31,7 +31,10 @@ assert all(checks.values()),checks
  def test_nonzero_exit(self):
   self.assertEqual(self.run_code('raise SystemExit(7)')['exit_code'],7)
  def test_output_bound(self):
+  before=subprocess.check_output(['docker','ps','-aq','--filter','name=titan-']).split()
   with self.assertRaises(TimeoutError):self.run_code('while True: print("x"*4096,flush=True)')
+  after=subprocess.check_output(['docker','ps','-aq','--filter','name=titan-']).split()
+  self.assertEqual(after,before,'Sandbox container leaked after output limit')
  def test_exact_approval_before_real_execution(self):
   mid=self.db.submit('sandbox acceptance');args={'code':'print(6*7)'}
   with self.assertRaises(PermissionError):self.tools.execute(mid,'sandbox.python',args)

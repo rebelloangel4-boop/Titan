@@ -97,7 +97,8 @@ class ToolRegistry:
                 if proc.poll() is None:raise TimeoutError('Sandbox time/output limit reached')
                 return {'exit_code':proc.returncode,'output':redact(output.decode(errors='replace')),'verification':'sandbox_execution'}
             finally:
-                try:subprocess.run(['docker','rm','-f',name],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=10)
-                finally:
-                    if proc.poll() is None:proc.kill()
-                    proc.wait(timeout=5);sel.close();proc.stdout.close()
+                # Release the attached output pipe before asking Docker to remove a
+                # flooding container; otherwise daemon stream cleanup can deadlock.
+                if proc.poll() is None:proc.kill()
+                proc.wait(timeout=5);sel.close();proc.stdout.close()
+                subprocess.run(['docker','rm','-f',name],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=10)

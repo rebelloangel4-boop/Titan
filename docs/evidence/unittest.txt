@@ -87,8 +87,13 @@ test_goal_finds_partial_terms (test_retrieval.RetrievalTests.test_goal_finds_par
 test_isolation_and_expiry (test_retrieval.RetrievalTests.test_isolation_and_expiry) ... ok
 test_planner_receives_memory (test_retrieval.RetrievalTests.test_planner_receives_memory) ... ok
 test_validation_and_literal_search_preserved (test_retrieval.RetrievalTests.test_validation_and_literal_search_preserved) ... ok
+test_corrupt_artifact_rejected (test_snapshot.SnapshotTests.test_corrupt_artifact_rejected) ... ok
+test_existing_destination_preserved (test_snapshot.SnapshotTests.test_existing_destination_preserved) ... ok
+test_roundtrip_database_and_artifact (test_snapshot.SnapshotTests.test_roundtrip_database_and_artifact) ... ok
+test_symlink_rejected (test_snapshot.SnapshotTests.test_symlink_rejected) ... ok
+test_traversal_and_cleanup (test_snapshot.SnapshotTests.test_traversal_and_cleanup) ... ok
 
 ----------------------------------------------------------------------
-Ran 89 tests in 6.911s
+Ran 94 tests in 7.127s
 
 OK
