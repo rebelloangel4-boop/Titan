@@ -2,19 +2,7 @@
 
 Do these in order. You do not need to write code, fix tests, or perform manual video editing. Do not paste passwords or API keys into chat.
 
-## 1. Make the private TITAN repository accessible
-
-**Why you:** The connected GitHub account is verified as `rebelloangel4-boop`, but `titan-ai` returns 404. The connector cannot create repositories; the browser is not signed in and its approval service is currently usage-limited.
-
-**Needed:** A private repository named `titan-ai`, plus access for your connected GitHub app.
-
-**Cost:** Creating the repository does not itself require purchasing hosting or AI inference. Keep Actions billing limits at zero until reviewed.
-
-**Simplest safe steps on Android:** Open GitHub in Chrome, sign in, create a new repository under `rebelloangel4-boop`, name it `titan-ai`, select **Private**, and leave it empty. If it already exists, grant the connected GitHub app access to that repository. Then send only the repository link here. Do not make it public to solve access problems.
-
-**Afterward:** I can attempt the source push and remote CI, inspect real browser/container results, and fix failures. TITAN's separate draft-PR connector will later need a repository-scoped credential on its server, with Contents and Pull requests permissions only. It does not inherit ChatGPT's GitHub connection.
-
-## 2. Connect two model providers securely
+## 1. Connect two model providers securely
 
 **Why you:** No provider API keys are configured in this execution environment. Account authentication and acceptance of provider terms must be yours.
 
@@ -26,7 +14,7 @@ Do these in order. You do not need to write code, fix tests, or perform manual v
 
 **Afterward:** We can execute a genuine independent debate, validate failover and response formats, run the frozen model benchmark, and measure actual latency/usage. More providers can be added after two work.
 
-## 3. Provide an authorized persistent hosting destination
+## 2. Provide an authorized persistent hosting destination
 
 **Why you:** Cloud account verification, terms, identity/payment checks and permissions cannot be completed on your behalf without the account setup. No persistent TITAN service has been created.
 
@@ -38,7 +26,7 @@ Do these in order. You do not need to write code, fix tests, or perform manual v
 
 **Afterward:** I can attempt the Docker build, sandbox acceptance tests, HTTPS deployment, persistent worker configuration, restart/restore tests and Android PWA verification. The prepared deployment package alone does not start a service.
 
-## 4. Optional service connections, after the core works
+## 3. Optional service connections, after the core works
 
 **Why you:** These connect your private files, recipients or market-data account. Permissions and recipient selection must be explicit.
 

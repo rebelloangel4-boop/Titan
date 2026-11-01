@@ -46,3 +46,7 @@ Source and Git history are saved in the package. Read USER_ACTION_REQUIRED.md fo
 Reverified 82-test baseline; final suite now 89 passed. Added dependency-free BM25-style lexical retrieval for chat and agent planning. Only the latest 500 active records in the selected project are candidates; context defaults to 12,000 key/value characters. Full memory remains stored, and truncated excerpts are marked. This improves multi-word goal matching but is not semantic embedding retrieval or proven prompt-injection resistance. The 21/40 acceptance score remains unchanged.
 
 GitHub connection reverified as rebelloangel4-boop. titan-ai still returns 404; available connector has no repository-creation operation and no authenticated CLI exists. No repository was created or pushed. GEMINI_HANDOFF.md defines an isolated independent audit; it has not been run by Gemini.
+
+## Public repository publication — 2026-10-31
+
+User explicitly authorized public source publication. Repository: https://github.com/rebelloangel4-boop/Titan. Snapshot from local commit 6745f55 imported as remote commit d2becf3794788533dd522d0934bcbb85bbdc98ab; 70 files including source, evidence and CI. Original local history remains in the saved Git bundle. Re-ran 89 tests successfully before publication. Credential-pattern scan found no matches; this is not a comprehensive secret audit. API keys and runtime databases are excluded. No deployment or live inference occurred.

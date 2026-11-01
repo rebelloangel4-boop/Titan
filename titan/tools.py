@@ -89,7 +89,9 @@ class ToolRegistry:
                 while time.monotonic()<deadline and len(output)<65536:
                     if sel.select(.1):
                         chunk=os.read(proc.stdout.fileno(),min(4096,65536-len(output)))
-                        if not chunk:break
+                        if not chunk:
+                            proc.wait(timeout=max(.01,deadline-time.monotonic()))
+                            break
                         output.extend(chunk)
                     elif proc.poll() is not None:break
                 if proc.poll() is None:raise TimeoutError('Sandbox time/output limit reached')

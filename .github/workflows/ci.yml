@@ -46,6 +46,16 @@ jobs:
           mkdir -p .secrets
           python -c "import secrets; open('.secrets/titan_token','w').write(secrets.token_urlsafe(32))"
           docker compose config --quiet
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Real sandbox boundaries and approval tests
+        shell: bash
+        run: |
+          docker pull python:3.12-slim-bookworm
+          export TITAN_SANDBOX_IMAGE="$(docker image inspect python:3.12-slim-bookworm --format '{{index .RepoDigests 0}}')"
+          export TITAN_ENABLE_SANDBOX=1
+          python -m tests.sandbox_acceptance
       - run: docker build -t titan-ci .
       - name: Verify container startup and health
         shell: bash
