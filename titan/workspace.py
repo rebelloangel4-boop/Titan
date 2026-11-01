@@ -53,6 +53,11 @@ class Workspace:
   from .retrieval import rank
   with self.db.connect() as c:
    rows=[dict(r) for r in c.execute("SELECT * FROM knowledge WHERE project=? AND (scope='long' OR updated>?) ORDER BY updated DESC,key LIMIT 500",(project,time.time()-86400))]
+  mode=os.getenv('TITAN_MEMORY_MODE','lexical')
+  if mode=='semantic':
+   from .semantic import rank as semantic_rank
+   return semantic_rank(self.db,project,rows,query,limit,max_chars)
+  if mode!='lexical':raise ValueError('Unknown memory retrieval mode')
   return rank(rows,query,limit,max_chars)
  def artifact(self,project,job,name,data,mime='application/octet-stream'):
   self.require(project)

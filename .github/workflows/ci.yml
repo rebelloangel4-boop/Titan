@@ -69,3 +69,30 @@ jobs:
           exit 1
       - if: always()
         run: docker rm -f titan-ci || true
+
+  semantic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      HF_HUB_DISABLE_IMPLICIT_TOKEN: '1'
+      TOKENIZERS_PARALLELISM: 'false'
+      OMP_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install torch==2.9.0 --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -r requirements-semantic.txt
+      - run: python -m titan.semantic --download
+      - name: Real embedding retrieval benchmark and recovery
+        env:
+          HF_HUB_OFFLINE: '1'
+        run: python -m tests.semantic_acceptance
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: semantic-acceptance
+          path: docs/evidence/semantic-acceptance.json
+          if-no-files-found: warn

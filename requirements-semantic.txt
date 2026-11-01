@@ -1,0 +1,3 @@
+# Optional CPU embedding stack. Install CPU torch separately as documented.
+sentence-transformers==5.1.2
+transformers==4.57.1

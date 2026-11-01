@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "minimum_top1_accuracy": 1.0,
+  "memories": {
+    "m1": "The vehicle requires maintenance because its motor overheats.",
+    "m2": "Keep authentication credentials out of application logs and source control.",
+    "m3": "After an interruption, recover unfinished tasks from the durable queue.",
+    "m4": "Preserve a copy of stored information so it can be recovered after disk failure.",
+    "m5": "Display captions beneath the speaker in vertical short films.",
+    "m6": "Obtain human authorization before executing irreversible operations.",
+    "m7": "The cafe serves coffee and fresh bread every morning.",
+    "m8": "The telescope reveals distant galaxies in the night sky."
+  },
+  "queries": [
+    {"query": "My car engine gets too hot. What should I do?", "expected": "m1"},
+    {"query": "How should passwords and API keys be protected?", "expected": "m2"},
+    {"query": "Continue pending jobs following a crash", "expected": "m3"},
+    {"query": "How can we restore lost data if storage breaks?", "expected": "m4"},
+    {"query": "Where should subtitles go in portrait videos?", "expected": "m5"},
+    {"query": "Ask a person for permission before destructive actions", "expected": "m6"}
+  ]
+}
