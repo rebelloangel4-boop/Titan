@@ -42,6 +42,18 @@ assert all(checks.values()),checks
   result=self.tools.execute(mid,'sandbox.python',args);self.assertEqual(result['output'].strip(),'42')
   with self.assertRaises(PermissionError):self.tools.execute(mid,'sandbox.python',args)
 
+ def test_multifile_project_and_independent_acceptance(self):
+  from titan.python_project import harness,summary
+  files={'calc/__init__.py':'','calc/math.py':'def add(a,b):return a+b','test_math.py':'import unittest\nfrom calc.math import add\nclass T(unittest.TestCase):\n def test_sum(self):self.assertEqual(add(2,3),5)'}
+  acceptance='import unittest\nfrom calc.math import add\nclass Acceptance(unittest.TestCase):\n def test_negative(self):self.assertEqual(add(-2,-3),-5)'
+  result=self.run_code(harness(files,acceptance));self.assertEqual(summary(result)['tests_run'],2,result)
+  files['calc/math.py']='def add(a,b):return 5'
+  result=self.run_code(harness(files,acceptance));self.assertNotEqual(result['exit_code'],0,result)
+ def test_zero_tests_and_early_exit_rejected(self):
+  from titan.python_project import harness,summary
+  result=self.run_code(harness({'test_empty.py':'x=1'}));self.assertIsNone(summary(result))
+  result=self.run_code(harness({'test_exit.py':'raise SystemExit(0)'}));self.assertIsNone(summary(result))
+
 if __name__=='__main__':
  if os.getenv('TITAN_ENABLE_SANDBOX')!='1' or not os.getenv('TITAN_SANDBOX_IMAGE'):raise SystemExit('Explicit sandbox enable and digest image required')
  unittest.main(verbosity=2)
