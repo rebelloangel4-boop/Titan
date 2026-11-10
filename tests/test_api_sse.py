@@ -35,6 +35,16 @@ class EventStreamTests(unittest.TestCase):
             self.assertIn('"detail":"second event"', second)
         asyncio.run(scenario())
 
+    def test_idle_stream_emits_heartbeat(self):
+        async def scenario():
+            stop = asyncio.Event()
+            stream = event_stream(self.db, heartbeat_seconds=0.01,
+                                  poll_seconds=0.002, stop_event=stop)
+            frame = await asyncio.wait_for(anext(stream), timeout=1)
+            await stream.aclose()
+            self.assertEqual(frame, ": heartbeat\\n\\n")
+        asyncio.run(scenario())
+
     def test_events_after_are_ascending_and_job_scoped(self):
         a = self.db.submit("job A", kind="analysis", payload={"values": [1]})
         b = self.db.submit("job B", kind="analysis", payload={"values": [2]})
