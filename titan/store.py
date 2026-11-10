@@ -127,7 +127,10 @@ class Database:
         if job_id is not None and (not isinstance(job_id,str) or not job_id or len(job_id)>128): raise ValueError('Invalid job ID')
         if type(limit) is not int or not 1 <= limit <= 1000: raise ValueError('Invalid event limit')
         with self.connect() as c:
-            rows=c.execute('SELECT * FROM events WHERE id>? AND (? IS NULL OR job=?) ORDER BY id ASC LIMIT ?',(cursor,job_id,job_id,limit)).fetchall()
+            if job_id is None:
+                rows=c.execute('SELECT * FROM events WHERE id>? ORDER BY id ASC LIMIT ?',(cursor,limit)).fetchall()
+            else:
+                rows=c.execute('SELECT * FROM events WHERE job=? AND id>? ORDER BY id ASC LIMIT ?',(job_id,cursor,limit)).fetchall()
         return [dict(r) for r in rows]
     def remember(self,key,value,scope='long'):
         if scope not in ('short','long'):raise ValueError('Invalid memory scope')
