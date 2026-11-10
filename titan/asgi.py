@@ -83,7 +83,7 @@ def create_app(db=None, token=None):
         enrollment = os.getenv("TITAN_DEVICE_ENROLLMENT_TOKEN", "")
         supplied = body.get("enrollment_token", "")
         import secrets
-        if not enrollment or not secrets.compare_digest(str(supplied), enrollment):
+        if len(enrollment) < 32 or not secrets.compare_digest(str(supplied), enrollment):
             raise HTTPException(status_code=403, detail="Device enrollment is not enabled or token is invalid")
         try:
             return await asyncio.to_thread(service.register_device, body["device_id"], body["algorithm"], body["public_key"])
