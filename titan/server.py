@@ -9,6 +9,7 @@ from .engine import Worker
 from .security import authenticate,redact
 from .improvement import Improvements
 from .tools import ToolRegistry
+from .api_services import APIService
 
 WEB=Path(__file__).parent/'web'
 class Server(ThreadingHTTPServer):
@@ -17,6 +18,7 @@ class Server(ThreadingHTTPServer):
         if len(token)<32:raise ValueError('TITAN_TOKEN must have at least 32 characters')
         from .workspace import Workspace
         self.workspace=Workspace(db)
+        self.services=APIService(db,self.workspace)
         self.slots=threading.BoundedSemaphore(32);self.auth_failures={};self.auth_lock=threading.Lock()
         self.db=db;self.token=token
         super().__init__(address,Handler)
@@ -94,31 +96,30 @@ class Handler(BaseHTTPRequestHandler):
                     return self.send(201,{'id':workspace.schedule(data.get('project','default'),data['objective'],data['kind'],data.get('payload',{}),data['interval_seconds'])})
                 return self.send(200,workspace.schedules())
             if path.startswith('/api/artifacts/') and not post:
-                meta,raw=workspace.read_artifact(path.split('/')[-1])
+                meta,raw=self.server.services.read_artifact(path.split('/')[-1])
                 return self.send(200,raw,'application/octet-stream',meta['name'])
             if path=='/api/state' and not post:
-                with db.connect() as c:
-                    approvals=[dict(r) for r in c.execute("SELECT * FROM approvals WHERE status='pending' ORDER BY created DESC LIMIT 100")]
-                    used=dict(c.execute('SELECT COUNT(*) calls,COALESCE(SUM(cost),0) reserved_usd FROM calls WHERE ts>=?',(int(time.time()//86400)*86400,)).fetchone())
-                return self.send(200,{'missions':db.list(),'models':Router(db).catalog(),'metrics':Router(db).metrics(),'memory':db.memories(),'events':db.events(),'approvals':approvals,'improvements':Improvements(db).list(),'failure_analysis':Improvements(db).propose(),'budget':{'daily_usd':float(os.getenv('TITAN_DAILY_USD','0')),'daily_calls':int(os.getenv('TITAN_DAILY_CALLS','50')),**used},'tools':sorted(ToolRegistry.names),'projects':workspace.projects(),'artifacts':workspace.artifacts(),'schedules':workspace.schedules(),'runtime':'single-operator; live providers require credentials'})
+                return self.send(200,self.server.services.state())
             if path=='/api/missions' and post:
-                kind=data.get('kind','debate');payload=data.get('payload',{})
-                if not isinstance(payload,dict):raise ValueError('Payload must be an object')
-                from .core import PROVIDERS
-                if kind=='debate' and 'providers' in payload:
-                    ps=payload['providers']
-                    if not isinstance(ps,list) or not 2<=len(ps)<=7 or any(p not in {*PROVIDERS,'local'} for p in ps) or len(set(ps))!=len(ps):raise ValueError('Select 2–7 distinct known providers')
-                if kind=='tool' and payload.get('tool') not in ToolRegistry.names:raise ValueError('Unsupported tool')
-                due=data.get('due')
-                if due is not None and (not isinstance(due,(int,float)) or not time.time()-1<=due<=time.time()+31536000):raise ValueError('Schedule must be within one year')
-                mid=db.submit(redact(data['objective']),kind,json.loads(redact(json.dumps(payload))),due,project=data.get('project','default'))
-                return self.send(201,{'id':mid})
+                return self.send(201,self.server.services.create_mission(data))
             if path.startswith('/api/missions/') and post:
-                mid=path.split('/')[-1];db.control(mid,data['action']);return self.send(200,db.get(mid))
+                mid=path.split('/')[-1];return self.send(200,self.server.services.control_mission(mid,data['action']))
             if path=='/api/memory' and post:
                 db.remember(data['key'],data['value'],data.get('scope','long'));return self.send(200,{'saved':True})
+            if path=='/api/devices/register' and post:
+                enrollment=os.getenv('TITAN_DEVICE_ENROLLMENT_TOKEN','')
+                if not enrollment or not __import__('secrets').compare_digest(str(data.get('enrollment_token','')),enrollment):
+                    return self.send(403,{'error':'Device enrollment is not enabled or token is invalid'})
+                return self.send(200,self.server.services.register_device(data['device_id'],data['algorithm'],data['public_key']))
+            if path.startswith('/api/approvals/') and path.endswith('/challenge') and post:
+                approval_id=path.split('/')[-2]
+                return self.send(200,self.server.services.approval_challenge(approval_id,data['device_id']))
+            if path.startswith('/api/approvals/') and path.endswith('/verify') and post:
+                approval_id=path.split('/')[-2]
+                result=self.server.services.approve_signed(data['device_id'],approval_id,data['action_digest'],data['expiry'],data['nonce'],data['signature'])
+                return self.send(200,result)
             if path=='/api/approve' and post:
-                ToolRegistry(db).approve(data['id']);return self.send(200,{'approved':True,'next':'Resume the blocked mission'})
+                return self.send(403,{'error':'Device-signed approval required; use /api/approvals/{id}/challenge and /verify'})
             if path=='/api/policy' and post:
                 from . import policy
                 action=data.get('action')
