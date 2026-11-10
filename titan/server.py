@@ -119,7 +119,11 @@ class Handler(BaseHTTPRequestHandler):
                 result=self.server.services.approve_signed(data['device_id'],approval_id,data['action_digest'],data['expiry'],data['nonce'],data['signature'])
                 return self.send(200,result)
             if path=='/api/approve' and post:
-                return self.send(403,{'error':'Device-signed approval required; use /api/approvals/{id}/challenge and /verify'})
+                approval_id=data.get('approval_id',data.get('id'))
+                required=('device_id','action_digest','expiry','nonce','signature')
+                if not approval_id or any(k not in data for k in required):
+                    return self.send(403,{'error':'Device-signed approval required; obtain a challenge before approval'})
+                return self.send(200,self.server.services.approve_signed(data['device_id'],approval_id,data['action_digest'],data['expiry'],data['nonce'],data['signature']))
             if path=='/api/policy' and post:
                 from . import policy
                 action=data.get('action')
