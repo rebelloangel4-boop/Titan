@@ -21,7 +21,11 @@ class Database:
             CREATE TABLE IF NOT EXISTS approvals(id TEXT PRIMARY KEY, job TEXT, tool TEXT, digest TEXT, status TEXT, created REAL);
             CREATE TABLE IF NOT EXISTS improvements(id TEXT PRIMARY KEY, candidate TEXT, baseline TEXT, scores TEXT, status TEXT, created REAL);
             CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT);
+            CREATE TABLE IF NOT EXISTS titan_devices(device_id TEXT PRIMARY KEY, algorithm TEXT NOT NULL, public_key TEXT NOT NULL, created REAL NOT NULL, revoked INTEGER NOT NULL DEFAULT 0);
+            CREATE TABLE IF NOT EXISTS approval_challenges(nonce TEXT PRIMARY KEY, approval_id TEXT NOT NULL, device_id TEXT NOT NULL, action_digest TEXT NOT NULL, expiry INTEGER NOT NULL, used INTEGER NOT NULL DEFAULT 0, created REAL NOT NULL);
             CREATE INDEX IF NOT EXISTS due_jobs ON jobs(status,due);
+            CREATE INDEX IF NOT EXISTS events_job_id_idx ON events(job,id);
+            CREATE INDEX IF NOT EXISTS approval_challenges_expiry_idx ON approval_challenges(expiry,used);
             ''')
             c.execute('BEGIN IMMEDIATE')
             columns={r[1] for r in c.execute('PRAGMA table_info(approvals)')}
@@ -117,6 +121,14 @@ class Database:
     def events(self,mid=None):
         with self.connect() as c:
             return [dict(r) for r in c.execute('SELECT * FROM events WHERE (? IS NULL OR job=?) ORDER BY id DESC LIMIT 200',(mid,mid))]
+    def events_after(self, cursor: int, job_id=None, limit: int=100):
+        \"\"\"Return events strictly after cursor in ascending ID order for resumable streams.\"\"\"
+        if type(cursor) is not int or cursor < 0: raise ValueError('Invalid event cursor')
+        if job_id is not None and (not isinstance(job_id,str) or not job_id or len(job_id)>128): raise ValueError('Invalid job ID')
+        if type(limit) is not int or not 1 <= limit <= 1000: raise ValueError('Invalid event limit')
+        with self.connect() as c:
+            rows=c.execute('SELECT * FROM events WHERE id>? AND (? IS NULL OR job=?) ORDER BY id ASC LIMIT ?',(cursor,job_id,job_id,limit)).fetchall()
+        return [dict(r) for r in rows]
     def remember(self,key,value,scope='long'):
         if scope not in ('short','long'):raise ValueError('Invalid memory scope')
         if not key or len(key)>200 or len(value)>20000:raise ValueError('Memory too large')
