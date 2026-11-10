@@ -2,7 +2,7 @@
 
 **Branch:** `feat/titan-v2-android-upgrade`  
 **Base:** `main` at `ef770e0304d9073a1e1bc73d9cece50ad8be454a`  
-**Latest implementation commit at this report:** `397e529d28356911b2e13cfe6e03418716c39889`  
+**Latest backend implementation commit at this report:** `9b5b908c5b76e44c218fccfb15e4fe92916cca46`  
 **Scope:** Backend foundation only. No Android project scaffolded.
 
 ## Baseline and verification honesty
@@ -10,7 +10,8 @@
 - The repository's documented historical checkpoint reported 111 passing `unittest` tests and 23/40 accepted criteria. This is historical evidence, not a fresh baseline.
 - The local execution environment could not resolve `github.com`; therefore a local clone, `git status`, local baseline run and local post-change test run were not available.
 - The authoritative command remains `python -m unittest discover -s tests -v`.
-- GitHub Actions CI is configured to run that command on every push, and the Python job now installs `requirements-api.txt`. The latest branch run must be inspected before marking this phase verified.
+- Fourteen new unittest cases have been added across SSE, heartbeat, cursor replay, cryptographic signatures, expiry, replay and tamper scenarios.
+- GitHub Actions CI is configured to run that command on every push, and the Python job now installs `requirements-api.txt`. The latest observed run is [42788582276](https://github.com/rebelloangel4-boop/Titan/actions/runs/42788582276), still pending with no jobs assigned at the time of this report.
 - No test pass is claimed in this report until the latest GitHub Actions run completes successfully.
 
 ## Changes committed to the development branch
@@ -48,7 +49,7 @@
 - `titan/server.py`
   - Reuses the shared API service for mission creation/control, state and artifact reads.
   - Keeps the existing stdlib HTTP server and existing route surface.
-  - Direct unsigned `POST /api/approve` now fails closed with 403; use device enrollment, challenge and verify endpoints instead.
+  - `POST /api/approve` remains available but now requires the complete device-signed challenge fields; unsigned legacy approvals fail closed with 403.
 
 - `requirements-api.txt`
   - Adds optional FastAPI, Uvicorn, cryptography and HTTPX dependencies. The original backend's stdlib-only runtime remains unchanged unless the ASGI/approval features are used.
@@ -75,10 +76,11 @@
 - `GET /api/artifacts`, `GET /api/artifacts/{id}`.
 - `GET /api/state`, `GET /healthz`.
 
-Run the optional adapter with:
+Run the optional adapter and existing worker as separate processes sharing the same persistent database:
 ```bash
 pip install -r requirements-api.txt
 uvicorn titan.asgi:create_app --factory --host 127.0.0.1 --port 8788
+python -m titan.cli --worker --db titan.db
 ```
 
 Set `TITAN_TOKEN` (minimum 32 characters), `TITAN_DB`, and `TITAN_DEVICE_ENROLLMENT_TOKEN` before exposing device enrollment. Deploy behind trusted HTTPS. Do not expose the development ASGI server directly to the public internet.
@@ -86,7 +88,7 @@ Set `TITAN_TOKEN` (minimum 32 characters), `TITAN_DB`, and `TITAN_DEVICE_ENROLLM
 ## Known limitations / follow-up before production
 
 1. The original browser UI's unsigned approve action is intentionally disabled; it needs a device-key challenge/signing UX before it can approve sensitive actions.
-2. Device enrollment is protected by a separately configured enrollment secret, but production enrollment should add a short-lived, operator-issued enrollment flow and device revocation UI.
+2. Device enrollment is protected by a separately configured enrollment secret (minimum 32 characters); production enrollment should add a short-lived, operator-issued enrollment flow and device revocation UI.
 3. ECDSA P-256 is the primary Android Keystore-compatible path. Validate the exact Android signature encoding and key attestation policy during Android integration.
 4. SSE polling is bounded and non-blocking but is not a push-notification broker; a high event volume may warrant a dedicated notification layer later.
 5. FastAPI is an optional transport adapter. Existing stdlib server and worker remain the underlying engine.
