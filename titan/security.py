@@ -1,7 +1,7 @@
 import hashlib, json, os, re, secrets, socket, ipaddress, time
 from urllib.parse import urlsplit
 
-SECRET_NAMES=('GEMINI_API_KEY','GROQ_API_KEY','OPENAI_API_KEY','ANTHROPIC_API_KEY','DEEPSEEK_API_KEY','XAI_API_KEY','GITHUB_TOKEN','TELEGRAM_BOT_TOKEN','TITAN_TOKEN','GOOGLE_ACCESS_TOKEN','GOOGLE_REFRESH_TOKEN','GOOGLE_CLIENT_ID','GOOGLE_CLIENT_SECRET','TITAN_MCP_TOKEN')
+SECRET_NAMES=('GEMINI_API_KEY','GROQ_API_KEY','OPENAI_API_KEY','ANTHROPIC_API_KEY','DEEPSEEK_API_KEY','XAI_API_KEY','GITHUB_TOKEN','TELEGRAM_BOT_TOKEN','TITAN_TOKEN','GOOGLE_ACCESS_TOKEN','GOOGLE_REFRESH_TOKEN','GOOGLE_CLIENT_ID','GOOGLE_CLIENT_SECRET','TITAN_MCP_TOKEN','TITAN_DEVICE_ENROLLMENT_TOKEN')
 def redact(text):
     for key in SECRET_NAMES:
         val=os.getenv(key)
@@ -57,8 +57,15 @@ def register_device_public_key(db, device_id, algorithm, public_key):
         raise ValueError("Ed25519 public key required")
     canonical = key.public_bytes(serialization.Encoding.PEM, serialization.PublicFormat.SubjectPublicKeyInfo).decode()
     with db.connect() as c:
-        c.execute("INSERT INTO titan_devices(device_id,algorithm,public_key,created,revoked) VALUES(?,?,?,?,0) ON CONFLICT(device_id) DO UPDATE SET algorithm=excluded.algorithm,public_key=excluded.public_key,created=excluded.created,revoked=0",
-                  (device_id, algorithm, canonical, time.time()))
+        existing = c.execute("SELECT revoked FROM titan_devices WHERE device_id=?", (device_id,)).fetchone()
+        if existing and not existing["revoked"]:
+            raise ValueError("Device ID is already registered; use a new ID for key rotation")
+        if existing:
+            c.execute("UPDATE titan_devices SET algorithm=?,public_key=?,created=?,revoked=0 WHERE device_id=?",
+                      (algorithm, canonical, time.time(), device_id))
+        else:
+            c.execute("INSERT INTO titan_devices(device_id,algorithm,public_key,created,revoked) VALUES(?,?,?,?,0)",
+                      (device_id, algorithm, canonical, time.time()))
     return {"device_id": device_id, "algorithm": algorithm, "registered": True}
 
 
