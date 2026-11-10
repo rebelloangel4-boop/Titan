@@ -108,7 +108,7 @@ class Handler(BaseHTTPRequestHandler):
                 db.remember(data['key'],data['value'],data.get('scope','long'));return self.send(200,{'saved':True})
             if path=='/api/devices/register' and post:
                 enrollment=os.getenv('TITAN_DEVICE_ENROLLMENT_TOKEN','')
-                if not enrollment or not __import__('secrets').compare_digest(str(data.get('enrollment_token','')),enrollment):
+                if len(enrollment)<32 or not __import__('secrets').compare_digest(str(data.get('enrollment_token','')),enrollment):
                     return self.send(403,{'error':'Device enrollment is not enabled or token is invalid'})
                 return self.send(200,self.server.services.register_device(data['device_id'],data['algorithm'],data['public_key']))
             if path.startswith('/api/approvals/') and path.endswith('/challenge') and post:
