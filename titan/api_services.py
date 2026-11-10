@@ -29,6 +29,8 @@ class APIService:
         if not isinstance(data, dict):
             raise ValueError("Mission body must be an object")
         objective = data.get("objective")
+        if not isinstance(objective, str) or not 1 <= len(objective.strip()) <= 12000:
+            raise ValueError("Objective must be 1–12000 characters")
         kind = data.get("kind", "debate")
         payload = data.get("payload", {})
         if not isinstance(payload, dict):
