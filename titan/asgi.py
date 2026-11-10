@@ -3,6 +3,7 @@
 Run with: uvicorn titan.asgi:create_app --factory --host 127.0.0.1 --port 8788
 The existing stdlib server remains available and backward compatible.
 """
+import asyncio
 import os
 from typing import Optional
 
@@ -44,34 +45,38 @@ def create_app(db=None, token=None):
     async def healthz():
         return {"status": "ok"}
 
+    @app.get("/api/state", dependencies=[Depends(require_auth)])
+    async def state():
+        return await asyncio.to_thread(service.state)
+
     @app.get("/api/missions", dependencies=[Depends(require_auth)])
     async def list_missions():
-        return service.list_missions()
+        return await asyncio.to_thread(service.list_missions)
 
     @app.post("/api/missions", status_code=201, dependencies=[Depends(require_auth)])
     async def create_mission(body: dict):
         try:
-            return service.create_mission(body)
+            return await asyncio.to_thread(service.create_mission, body)
         except (KeyError, ValueError, TypeError, PermissionError) as exc:
             translate_error(exc)
 
     @app.post("/api/missions/{mission_id}/control", dependencies=[Depends(require_auth)])
     async def control_mission(mission_id: str, body: dict):
         try:
-            return service.control_mission(mission_id, body["action"])
+            return await asyncio.to_thread(service.control_mission, mission_id, body["action"])
         except (KeyError, ValueError, TypeError, PermissionError) as exc:
             translate_error(exc)
 
     @app.get("/api/debates/{mission_id}", dependencies=[Depends(require_auth)])
     async def get_debate(mission_id: str):
         try:
-            return service.get_debate(mission_id)
+            return await asyncio.to_thread(service.get_debate, mission_id)
         except (KeyError, ValueError, TypeError, PermissionError) as exc:
             translate_error(exc)
 
     @app.get("/api/approvals", dependencies=[Depends(require_auth)])
     async def pending_approvals():
-        return service.pending_approvals()
+        return await asyncio.to_thread(service.pending_approvals)
 
     @app.post("/api/devices/register", dependencies=[Depends(require_auth)])
     async def register_device(body: dict):
@@ -81,35 +86,35 @@ def create_app(db=None, token=None):
         if not enrollment or not secrets.compare_digest(str(supplied), enrollment):
             raise HTTPException(status_code=403, detail="Device enrollment is not enabled or token is invalid")
         try:
-            return service.register_device(body["device_id"], body["algorithm"], body["public_key"])
+            return await asyncio.to_thread(service.register_device, body["device_id"], body["algorithm"], body["public_key"])
         except (KeyError, ValueError, TypeError, PermissionError) as exc:
             translate_error(exc)
 
     @app.post("/api/approvals/{approval_id}/challenge", dependencies=[Depends(require_auth)])
     async def approval_challenge(approval_id: str, body: dict):
         try:
-            return service.approval_challenge(approval_id, body["device_id"])
+            return await asyncio.to_thread(service.approval_challenge, approval_id, body["device_id"])
         except (KeyError, ValueError, TypeError, PermissionError) as exc:
             translate_error(exc)
 
     @app.post("/api/approvals/{approval_id}/verify", dependencies=[Depends(require_auth)])
     async def verify_approval(approval_id: str, body: dict):
         try:
-            return service.approve_signed(
-                body["device_id"], approval_id, body["action_digest"],
-                body["expiry"], body["nonce"], body["signature"],
+            return await asyncio.to_thread(
+                service.approve_signed, body["device_id"], approval_id,
+                body["action_digest"], body["expiry"], body["nonce"], body["signature"],
             )
         except (KeyError, ValueError, TypeError, PermissionError) as exc:
             translate_error(exc)
 
     @app.get("/api/artifacts", dependencies=[Depends(require_auth)])
     async def list_artifacts(project: Optional[str] = None):
-        return service.list_artifacts(project)
+        return await asyncio.to_thread(service.list_artifacts, project)
 
     @app.get("/api/artifacts/{artifact_id}", dependencies=[Depends(require_auth)])
     async def read_artifact(artifact_id: str):
         try:
-            metadata, raw = service.read_artifact(artifact_id)
+            metadata, raw = await asyncio.to_thread(service.read_artifact, artifact_id)
             return Response(raw, media_type=metadata.get("mime") or "application/octet-stream",
                             headers={"Content-Disposition": 'attachment; filename="' + metadata["name"] + '"',
                                      "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"})
