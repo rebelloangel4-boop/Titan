@@ -48,7 +48,7 @@ class APIService:
             raise ValueError("Schedule must be within one year")
         project = data.get("project", "default")
         mid = self.db.submit(
-            objective, kind, json.loads(self._redact(json.dumps(payload))),
+            self._redact(objective), kind, json.loads(self._redact(json.dumps(payload))),
             due, project=project,
         )
         return {"id": mid}
