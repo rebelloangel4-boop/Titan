@@ -8,6 +8,7 @@ import time
 
 from .providers import Router
 from .tools import ToolRegistry
+from .improvement import Improvements
 from .security import (
     create_approval_challenge,
     register_device_public_key,
@@ -103,6 +104,8 @@ class APIService:
             "memory": self.db.memories(),
             "events": self.db.events(),
             "approvals": self.pending_approvals(),
+            "improvements": Improvements(self.db).list(),
+            "failure_analysis": Improvements(self.db).propose(),
             "budget": {
                 "daily_usd": float(__import__("os").getenv("TITAN_DAILY_USD", "0")),
                 "daily_calls": int(__import__("os").getenv("TITAN_DAILY_CALLS", "50")),
