@@ -123,6 +123,15 @@ class ApprovalSignatureTests(unittest.TestCase):
                 challenge["nonce"], base64.b64encode(b"bad-signature").decode(),
             )
 
+    def test_registered_device_key_cannot_be_silently_replaced(self):
+        private, device = self.register_ecdsa()
+        replacement = ec.generate_private_key(ec.SECP256R1()).public_key().public_bytes(
+            serialization.Encoding.PEM,
+            serialization.PublicFormat.SubjectPublicKeyInfo,
+        ).decode()
+        with self.assertRaises(ValueError):
+            register_device_public_key(self.db, device, "ECDSA_P256_SHA256", replacement)
+
     def test_invalid_key_algorithm_rejected(self):
         with self.assertRaises(ValueError):
             register_device_public_key(self.db, "bad", "RSA", "not-a-key")
