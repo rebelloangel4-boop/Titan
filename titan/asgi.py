@@ -74,6 +74,19 @@ def create_app(db=None, token=None):
         except (KeyError, ValueError, TypeError, PermissionError) as exc:
             translate_error(exc)
 
+    @app.post("/api/approve", dependencies=[Depends(require_auth)])
+    async def approve_signed(body: dict):
+        try:
+            approval_id = body.get("approval_id", body.get("id"))
+            if not approval_id:
+                raise HTTPException(status_code=403, detail="Device-signed approval required")
+            return await asyncio.to_thread(
+                service.approve_signed, body["device_id"], approval_id,
+                body["action_digest"], body["expiry"], body["nonce"], body["signature"],
+            )
+        except (KeyError, ValueError, TypeError, PermissionError) as exc:
+            translate_error(exc)
+
     @app.get("/api/approvals", dependencies=[Depends(require_auth)])
     async def pending_approvals():
         return await asyncio.to_thread(service.pending_approvals)
