@@ -1,0 +1,6 @@
+# Optional authenticated ASGI transport and device-signature verification.
+# The original worker/server runtime remains standard-library-only.
+fastapi>=0.115,<1
+uvicorn>=0.34,<1
+cryptography>=44,<47
+httpx>=0.27,<1
