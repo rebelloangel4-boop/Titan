@@ -127,7 +127,7 @@ def verify_approval_signature(db, device_id, approval_id, action_digest, expiry,
         approval = c.execute("SELECT digest,status FROM approvals WHERE id=?", (approval_id,)).fetchone()
         if not challenge or not device or not approval:
             raise PermissionError("Approval challenge not found")
-        if challenge["used"] or challenge["expiry"] < int(time.time()) or expiry != challenge["expiry"]:
+        if challenge["used"] or challenge["expiry"] <= int(time.time()) or expiry != challenge["expiry"]:
             raise PermissionError("Approval challenge expired or already used")
         if challenge["approval_id"] != approval_id or challenge["device_id"] != device_id:
             raise PermissionError("Approval challenge binding mismatch")
